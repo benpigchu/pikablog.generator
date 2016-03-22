@@ -9,6 +9,8 @@ var sourceParser=(text)=>{
 	var result={}
 	result.style=[]
 	result.script=[]
+	result.tag=[]
+	result.title=""
 	result.preview=""
 	result.full=""
 	var preview=true
@@ -49,6 +51,19 @@ var sourceParser=(text)=>{
 				text=text.slice(5)
 			}else{
 				var meta=text.slice(5,end)
+				if(meta=="more"){
+					preview=false
+				}
+				if(meta.length>=6){
+					if(meta.slice(0,6)=="title:"){
+						result.title=meta.slice(6)
+					}
+				}
+				if(meta.length>=4){
+					if(meta.slice(0,4)=="tag:"){
+						result.tag=meta.slice(4).split(",")
+					}
+				}
 				console.log(meta)
 				text=text.slice(end+3)
 			}
@@ -60,6 +75,11 @@ var sourceParser=(text)=>{
 			text=text.slice(1)
 		}
 	}
+	result.full=result.full+text
+	if(preview){
+		result.preview=result.preview+text
+	}
+	text=""
 	console.log(result)
 	return result
 }
@@ -67,7 +87,19 @@ var sourceParser=(text)=>{
 function Article(name,time,text){
 	this.name=name.slice(0,name.length-6)
 	this.time=time
-	result=sourceParser(text)
+	var result=sourceParser(text)
+	console.log(`${name} parsed`)
+	this.tag=result.tag
+	this.preview=result.preview
+	this.title=result.title
+	doc={}
+	doc.title=result.title
+	doc.time=time
+	doc.content=result.full
+	doc.tag=result.tag
+	doc.style=result.style
+	doc.script=result.script
+	fs.appendFile(path.normalize(output+path.sep+"article"+path.sep+this.name+".json"),JSON.stringify(doc))
 }
 
 input=process.argv[2]
