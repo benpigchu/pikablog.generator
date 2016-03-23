@@ -1,11 +1,11 @@
 #pikablog.generator
-The data generator for pikablog. It will be used on benpigchu.com/blog
+The data generator for pikablog. It will be used on benpigchu.com/blog .
 
 ##another NODE!
 Yes, JS is good!
 
 ##how to use
-just like this
+just like this:
 
 	main.js [input folder] [output folder]
 
@@ -33,16 +33,73 @@ notice:include @comments, style and script in each others may make an unexpected
 ##output folder
 
 ###the list files and the article files
-TODO
+article files is json files like below:
+
+```json
+{
+	"title": "test",
+	"time": "2016-03-23T05:26:07.964Z",
+	"content": "<p>just a test</p>\r\n",
+	"tag": [
+		"test",
+		"testing",
+		"example",
+		"instance"
+	],
+	"style": [
+		"p{color:#ff7f00}"
+	],
+	"script": [
+		"alert(\"test\")"
+	]
+}
+```
+list files is json files include array of articles sorted by time like below:
+
+```json
+{
+	"name": "test2",
+	"time": "2016-03-23T06:17:37.285Z",
+	"tag": [
+		"test",
+		"tag",
+		"try"
+	],
+	"preview": "<p>this is preview</p>\r\n",
+	"title": "another test"
+}
+```
 
 ###the article folder
-TODO
+include all article files.
 
 ###the list folder
-TODO
+include list file of all articles(10 in every slices) and a meta.json with number of slices.
 
 ###the tag folder
-TODO
+include a data.json with number of articles in tags like below:
+
+```json
+{
+	"test": 2,
+	"try": 2,
+	"tag": 1,
+	"example": 1,
+	"instance": 1
+}
+```
+
+and folders named by tags inlude list file of all articles with this tag(10 in every slices) and a meta.json with number of slices.
 
 ###the time folder
-TODO
+include a data.json with number of articles in monthes like below:
+
+```json
+{
+	"2016-3": 2,
+	"2016-2": 2
+}
+```
+
+and folders named by monthes inlude list file of all articles in this monthes(10 in every slices) and a meta.json with number of slices.
+

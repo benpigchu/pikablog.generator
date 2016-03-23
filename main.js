@@ -170,3 +170,19 @@ for(tag in tags){
 	outputList(tags[tag],path.normalize(output+path.sep+"tag"+path.sep+tag))
 }
 fs.appendFile(path.normalize(output+path.sep+"tag"+path.sep+"data.json"),JSON.stringify(tagData))
+
+var times={}
+articleList.forEach((article)=>{
+	var timeRange=article.time.getFullYear()+"-"+(1+article.time.getMonth())
+	if(!(timeRange in times)){
+		times[timeRange]=[]
+	}
+	times[timeRange].push(article)
+})
+var timeData={}
+for(timeRange in times){
+	timeData[timeRange]=times[timeRange].length
+	fs.mkdirSync(path.normalize(output+path.sep+"time"+path.sep+timeRange))
+	outputList(times[timeRange],path.normalize(output+path.sep+"time"+path.sep+timeRange))
+}
+fs.appendFile(path.normalize(output+path.sep+"time"+path.sep+"data.json"),JSON.stringify(timeData))
