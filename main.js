@@ -5,7 +5,7 @@ const util=require("util")
 var input
 var output
 
-var sourceParser=(text)=>{
+const sourceParser=(text)=>{
 	var result={}
 	result.style=[]
 	result.script=[]
@@ -102,6 +102,13 @@ function Article(name,time,text){
 	fs.appendFile(path.normalize(output+path.sep+"article"+path.sep+this.name+".json"),JSON.stringify(doc))
 }
 
+const outputList=(list,folder)=>{
+	for(var i=0;i*10<=list.length;i++){
+		fs.appendFile(path.normalize(folder+path.sep+(i+1)+".json"),JSON.stringify(list.slice(10*i,10*(i+1))))
+	}
+	fs.appendFile(path.normalize(folder+path.sep+"meta.json"),JSON.stringify(Math.ceil(list.length/10)))
+}
+
 input=process.argv[2]
 output=process.argv[3]
 if(input==undefined||output==undefined){
@@ -130,6 +137,7 @@ try{
 	fs.mkdirSync(path.normalize(output+path.sep+"time"))
 }catch(e){
 	console.log(`please make sure they are folders!`)
+	process.exit(0)
 }
 var articleList=[]
 fileList.forEach((name)=>{
@@ -143,3 +151,22 @@ fileList.forEach((name)=>{
 	}catch(e){}
 })
 
+articleList.sort((a,b)=>a.time.getTime()<b.time.getTime())
+outputList(articleList,path.normalize(output+path.sep+"list"))
+
+var tags={}
+articleList.forEach((article)=>{
+	article.tag.forEach((tag)=>{
+		if(!(tag in tags)){
+			tags[tag]=[]
+		}
+		tags[tag].push(article)
+	})
+})
+var tagData={}
+for(tag in tags){
+	tagData[tag]=tags[tag].length
+	fs.mkdirSync(path.normalize(output+path.sep+"tag"+path.sep+tag))
+	outputList(tags[tag],path.normalize(output+path.sep+"tag"+path.sep+tag))
+}
+fs.appendFile(path.normalize(output+path.sep+"tag"+path.sep+"data.json"),JSON.stringify(tagData))
