@@ -85,7 +85,7 @@ const sourceParser=(text)=>{
 }
 
 function Article(name,time,text){
-	this.name=name.slice(0,name.length-6)
+	this.name=name.slice(0,name.length-5)
 	this.time=time
 	var result=sourceParser(text)
 	console.log(`${name} parsed`)
