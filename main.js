@@ -80,6 +80,7 @@ const sourceParser=(text)=>{
 		result.preview=result.preview+text
 	}
 	result.full=result.full.replace(/[\r\n]+/g,"\n")
+	result.preview=result.preview.replace(/[\r\n]+/g,"\n")
 	text=""
 	console.log(result)
 	return result
