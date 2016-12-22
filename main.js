@@ -105,14 +105,14 @@ function Article(name,time,text){
 	doc.tag=result.tag
 	doc.style=result.style
 	doc.script=result.script
-	fs.appendFile(path.normalize(output+path.sep+"article"+path.sep+this.name+".json"),JSON.stringify(doc))
+	fs.appendFileSync(path.normalize(output+path.sep+"article"+path.sep+this.name+".json"),JSON.stringify(doc))
 }
 
 const outputList=(list,folder)=>{
 	for(var i=0;i*10<=list.length;i++){
-		fs.appendFile(path.normalize(folder+path.sep+(i+1)+".json"),JSON.stringify(list.slice(10*i,10*(i+1))))
+		fs.appendFileSync(path.normalize(folder+path.sep+(i+1)+".json"),JSON.stringify(list.slice(10*i,10*(i+1))))
 	}
-	fs.appendFile(path.normalize(folder+path.sep+"meta.json"),JSON.stringify(Math.ceil(list.length/10)))
+	fs.appendFileSync(path.normalize(folder+path.sep+"meta.json"),JSON.stringify(Math.ceil(list.length/10)))
 }
 
 input=process.argv[2]
@@ -175,7 +175,7 @@ for(tag in tags){
 	fs.mkdirSync(path.normalize(output+path.sep+"tag"+path.sep+tag))
 	outputList(tags[tag],path.normalize(output+path.sep+"tag"+path.sep+tag))
 }
-fs.appendFile(path.normalize(output+path.sep+"tag"+path.sep+"data.json"),JSON.stringify(tagData))
+fs.appendFileSync(path.normalize(output+path.sep+"tag"+path.sep+"data.json"),JSON.stringify(tagData))
 
 var times={}
 articleList.forEach((article)=>{
@@ -191,4 +191,4 @@ for(timeRange in times){
 	fs.mkdirSync(path.normalize(output+path.sep+"time"+path.sep+timeRange))
 	outputList(times[timeRange],path.normalize(output+path.sep+"time"+path.sep+timeRange))
 }
-fs.appendFile(path.normalize(output+path.sep+"time"+path.sep+"data.json"),JSON.stringify(timeData))
+fs.appendFileSync(path.normalize(output+path.sep+"time"+path.sep+"data.json"),JSON.stringify(timeData))
