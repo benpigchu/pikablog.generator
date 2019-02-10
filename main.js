@@ -107,7 +107,7 @@ function Article(name,time,text){
 }
 
 const outputList=(list,folder)=>{
-	for(var i=0;i*10<=list.length;i++){
+	for(var i=0;i*10<list.length;i++){
 		fs.appendFileSync(path.normalize(folder+path.sep+(i+1)+".json"),JSON.stringify(list.slice(10*i,10*(i+1))))
 	}
 	fs.appendFileSync(path.normalize(folder+path.sep+"meta.json"),JSON.stringify(Math.ceil(list.length/10)))
