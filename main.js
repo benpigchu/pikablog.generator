@@ -64,7 +64,6 @@ const sourceParser=(text)=>{
 						result.tag=meta.slice(4).split(",")
 					}
 				}
-				console.log(meta)
 				text=text.slice(end+3)
 			}
 		}else{
@@ -86,7 +85,6 @@ const sourceParser=(text)=>{
 	result.full=result.full.replace(/[\r\n]+$/g,"")
 	result.preview=result.preview.replace(/[\r\n]+$/g,"")
 	text=""
-	console.log(result)
 	return result
 }
 
@@ -157,7 +155,7 @@ fileList.forEach((name)=>{
 	}catch(e){}
 })
 
-articleList.sort((a,b)=>a.time.getTime()<b.time.getTime())
+articleList.sort((a,b)=>b.time.getTime()-a.time.getTime())
 outputList(articleList,path.normalize(output+path.sep+"list"))
 
 var tags={}
