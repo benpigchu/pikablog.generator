@@ -59,6 +59,13 @@ const sourceParser=(text)=>{
 						result.title=meta.slice(6)
 					}
 				}
+				if(meta.length>=5){
+					if(meta.slice(0,5)=="time:"){
+						try{
+							result.time=new Date(meta.slice(5))
+						}catch{}
+					}
+				}
 				if(meta.length>=4){
 					if(meta.slice(0,4)=="tag:"){
 						result.tag=meta.slice(4).split(",")
@@ -96,9 +103,12 @@ function Article(name,time,text){
 	this.tag=result.tag
 	this.preview=result.preview
 	this.title=result.title
+	if(result.time instanceof Date){
+		this.time=result.time
+	}
 	doc={}
 	doc.title=result.title
-	doc.time=time
+	doc.time=this.time
 	doc.content=result.full
 	doc.tag=result.tag
 	doc.style=result.style

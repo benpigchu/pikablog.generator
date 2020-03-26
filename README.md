@@ -15,6 +15,7 @@ Input folder should include all your blog articles in html like below
 ```html
 <!--@title:test article-->
 <!--@tag:test box art-->
+<!--@time:2000-10-10T10:10:10.100Z-->
 <p>this is a test</p>
 <!--@more-->
 <div id="left" class="left">left</div>
@@ -22,7 +23,7 @@ Input folder should include all your blog articles in html like below
 <script>document.getElementById("left").className="right"</script>
 ```
 
-Title should in the @title comment ,all tags should include in the @tag comment, and only the content before the @more comment should be shown in list view.
+Title should in the @title comment ,all tags should include in the @tag comment, and only the content before the @more comment should be shown in list view. @time comment can be used to override mtime of the document.
 
 Style and Script should only work when you entered the article, and should not work in list view.
 
